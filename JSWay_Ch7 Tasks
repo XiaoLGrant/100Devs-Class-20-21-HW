@@ -1,0 +1,131 @@
+//1 Musketeers: Write a program that:
+
+//     Creates an array named musketeers containing values "Athos", "Porthos" and "Aramis".
+//     Shows each array element using a for loop.
+//     Adds the "D'Artagnan" value to the array.
+//     Shows each array element using the forEach() method.
+//     Remove poor Aramis.
+//     Shows each array element using a for-of loop.
+let musketeers = ['Athos', 'Porthos', 'Aramis']
+for (i = 0; i < musketeers.length; i++) {
+    console.log(musketeers[i]);
+}
+
+musketeers.push("D'Artagnan")
+musketeers.forEach(item => {
+    console.log(item);
+})
+
+musketeers.splice(2, 1)
+for (const musketeer of musketeers) {
+    console.log(musketeer);
+}
+
+
+//2 Sum of values: Write a program that creates the following array, then calculates and shows the sum of its values (42 in that case).
+
+let sum = 0
+
+// function addThings() {
+//     const values = [3, 11, 7, 2, 9, 10];
+//     for (let i = 0; i < values.length; i++) {
+//         sum += values[i]
+        
+//     }
+//     return sum
+// }
+
+function addThingsWithForEach() {
+    const values = [3, 11, 7, 2, 9, 10];
+    values.forEach((item) => {
+        sum += item;
+    })
+    return sum
+}
+
+function addThingsWithForOf() {
+    const values = [3, 11, 7, 2, 9, 10];
+    for (const value of values) {
+        sum += value;
+    }
+    return sum
+}
+
+
+
+//3 Array maximum: Write a program that creates the following array, then calculates and shows the array's maximum value.
+const values2 = [3, 11, 7, 2, 9, 10];
+let max = 0
+// for (let i = 0; i < values2.length; i++) {
+//     if (values2[i] >= max) {
+//         max = values2[i]
+//     } else {
+//         max = max
+//     }
+// }
+// console.log(max);
+
+function maxValueWithForEach() {
+    const values2 = [3, 11, 7, 2, 9, 10];
+    values2.forEach((item, index) => {
+        if (item >= max) {
+            max = item
+        } else {
+            max = max
+        }
+    }
+    )
+    return max
+}
+
+function maxValueWithForOf() {
+    const values2 = [3, 11, 7, 2, 9, 10];
+    for (const value of values2) {
+        if (value >= max) {
+            max = value
+        } else {
+            max = max
+        }
+    }
+    return max
+}
+
+//4 List of words: Write a program that asks the user for a word until the user types "stop". The program then shows each of these words, except "stop".
+let userEntry = ''
+
+function guessStop(userEntry) {
+    userEntry = prompt('Enter a word.')
+    let words = []
+    
+    while (userEntry !== 'stop') {
+        words.push(userEntry);
+        userEntry = prompt('Enter a different word.');
+    }
+
+    if (userEntry === 'stop') {
+        return words
+    }
+}
+
+//idk how to do this with for each loops
+function guessStopWithForEach(userEntry) {
+    userEntry = prompt('Enter a word.')
+    let words = []
+
+    while (userEntry !== 'stop') {
+        words.push(userEntry);
+        userEntry = prompt('Enter a different word.');
+    }
+
+    if (userEntry === 'stop') {
+        words.push(userEntry);
+    }
+
+}
+
+//idk how to do this with for of loops either
+function guessStopWithForOf(userEntry) {
+    userEntry = prompt('Enter a word.')
+    let words = []
+
+}
