@@ -1,131 +1,364 @@
-//1 Musketeers: Write a program that:
-
-//     Creates an array named musketeers containing values "Athos", "Porthos" and "Aramis".
-//     Shows each array element using a for loop.
-//     Adds the "D'Artagnan" value to the array.
-//     Shows each array element using the forEach() method.
-//     Remove poor Aramis.
-//     Shows each array element using a for-of loop.
-let musketeers = ['Athos', 'Porthos', 'Aramis']
-for (i = 0; i < musketeers.length; i++) {
-    console.log(musketeers[i]);
+//Translate border-left-width to borderLeftWidth
+function camelize(str) {
+    str.split('-')
+    str.charAt(0).toUpperCase()
+    str.join('')
+    return str
 }
 
-musketeers.push("D'Artagnan")
-musketeers.forEach(item => {
-    console.log(item);
-})
+//solution
+function camelize(str) {
+    return str
+      .split('-') // splits 'my-long-word' into array ['my', 'long', 'word']
+      .map(
+        // capitalizes first letters of all array items except the first one
+        // converts ['my', 'long', 'word'] into ['my', 'Long', 'Word']
+        (word, index) => index == 0 ? word : word[0].toUpperCase() + word.slice(1)
+      )
+      .join(''); // joins ['my', 'Long', 'Word'] into 'myLongWord'
+  }
 
-musketeers.splice(2, 1)
-for (const musketeer of musketeers) {
-    console.log(musketeer);
-}
 
-
-//2 Sum of values: Write a program that creates the following array, then calculates and shows the sum of its values (42 in that case).
-
-let sum = 0
-
-// function addThings() {
-//     const values = [3, 11, 7, 2, 9, 10];
-//     for (let i = 0; i < values.length; i++) {
-//         sum += values[i]
-        
-//     }
-//     return sum
-// }
-
-function addThingsWithForEach() {
-    const values = [3, 11, 7, 2, 9, 10];
-    values.forEach((item) => {
-        sum += item;
+  /////////////////
+  
+//Filter range
+function filterRange(arr, a, b) {
+    arr.filter(function(item) {
+        if (item >= a || item <= b) {
+            return item
+        }
     })
-    return sum
 }
 
-function addThingsWithForOf() {
-    const values = [3, 11, 7, 2, 9, 10];
-    for (const value of values) {
-        sum += value;
+//Solution
+function filterRange(arr, a, b) {
+    // added brackets around the expression for better readability
+    return arr.filter(item => (a <= item && item <= b));
+  }
+  
+  let arr = [5, 3, 8, 1];
+  
+  let filtered = filterRange(arr, 1, 4);
+  
+  alert( filtered ); // 3,1 (matching values)
+  
+  alert( arr ); // 5,3,8,1 (not modified)
+
+  
+//////////////////////////
+
+//Filter range "in place"
+function filterRangeInPlace(arr, a, b) {
+    arr.filter(item => (a <= item && item <= b));
+    return arr.splice(0)
+}
+
+//Solution
+function filterRangeInPlace(arr, a, b) {
+
+    for (let i = 0; i < arr.length; i++) {
+      let val = arr[i];
+  
+      // remove if outside of the interval
+      if (val < a || val > b) {
+        arr.splice(i, 1);
+        i--;
+      }
     }
-    return sum
+  
+  }
+  
+  let arr = [5, 3, 8, 1];
+  
+  filterRangeInPlace(arr, 1, 4); // removed the numbers except from 1 to 4
+  
+  alert( arr ); // [3, 1]
+
+
+///////////////////////////
+
+//Sort in decreasing order
+function comparison (a, b) {
+    if (a < b) {
+        return 1
+    } else if (a = b) {
+        return 0
+    } else if (a > b) {
+        return -1
+    }
 }
 
+function sortDecreasing(arr) {
+    return arr.sort(comparison)
+}
+
+//solution
+let arr = [5, 2, 1, -10, 8];
+
+arr.sort((a, b) => b - a);
+
+alert( arr );
 
 
-//3 Array maximum: Write a program that creates the following array, then calculates and shows the array's maximum value.
-const values2 = [3, 11, 7, 2, 9, 10];
-let max = 0
-// for (let i = 0; i < values2.length; i++) {
-//     if (values2[i] >= max) {
-//         max = values2[i]
-//     } else {
-//         max = max
-//     }
-// }
-// console.log(max);
+///////////////////////////
 
-function maxValueWithForEach() {
-    const values2 = [3, 11, 7, 2, 9, 10];
-    values2.forEach((item, index) => {
-        if (item >= max) {
-            max = item
-        } else {
-            max = max
+//Copy & Sort Array
+let arr = ["HTML", "JavaScript", "CSS"];
+
+function copySorted(arr) {
+    return arr.slice(0).sort()
+}
+
+let sorted = copySorted(arr);
+
+alert( sorted ); // CSS, HTML, JavaScript
+alert( arr ); // HTML, JavaScript, CSS (no changes)
+
+
+///////////////////////////
+
+//Extendable Calculator
+let calc = new Calculator;
+
+function calculate(str) {
+    str.split(' ').join("");
+    // return Number(str);
+    return parseInt(str, 10);
+}
+
+console.log(calc.calculate("3 + 7"));
+
+//Solution
+function Calculator() {
+
+    this.methods = {
+      "-": (a, b) => a - b,
+      "+": (a, b) => a + b
+    };
+  
+    this.calculate = function(str) {
+  
+      let split = str.split(' '),
+        a = +split[0],
+        op = split[1],
+        b = +split[2];
+  
+      if (!this.methods[op] || isNaN(a) || isNaN(b)) {
+        return NaN;
+      }
+  
+      return this.methods[op](a, b);
+    };
+  
+    this.addMethod = function(name, func) {
+      this.methods[name] = func;
+    };
+  }
+
+
+///////////////////////////
+
+//Map to Names
+let john = { name: "John", age: 25 };
+let pete = { name: "Pete", age: 30 };
+let mary = { name: "Mary", age: 28 };
+
+let users = [ john, pete, mary ];
+
+let names = users.map(item => item.name);
+
+alert( names ); // John, Pete, Mary
+
+///////////////////////////
+
+//Map to Objects
+let john = { name: "John", surname: "Smith", id: 1 };
+let pete = { name: "Pete", surname: "Hunt", id: 2 };
+let mary = { name: "Mary", surname: "Key", id: 3 };
+
+let users = [ john, pete, mary ];
+
+let usersMapped = users.map(item => item.concat())
+
+/*
+usersMapped = [
+  { fullName: "John Smith", id: 1 },
+  { fullName: "Pete Hunt", id: 2 },
+  { fullName: "Mary Key", id: 3 }
+]
+*/
+
+alert( usersMapped[0].id ) // 1
+alert( usersMapped[0].fullName ) // John Smith
+
+//Solution
+let john = { name: "John", surname: "Smith", id: 1 };
+let pete = { name: "Pete", surname: "Hunt", id: 2 };
+let mary = { name: "Mary", surname: "Key", id: 3 };
+
+let users = [ john, pete, mary ];
+
+let usersMapped = users.map(user => ({
+  fullName: `${user.name} ${user.surname}`,
+  id: user.id
+}));
+
+/*
+usersMapped = [
+  { fullName: "John Smith", id: 1 },
+  { fullName: "Pete Hunt", id: 2 },
+  { fullName: "Mary Key", id: 3 }
+]
+*/
+
+alert( usersMapped[0].id ); // 1
+alert( usersMapped[0].fullName ); // John Smith
+
+
+////////////////////////////
+
+//Sort users by age
+let john = { name: "John", age: 25 };
+let pete = { name: "Pete", age: 30 };
+let mary = { name: "Mary", age: 28 };
+
+let arr = [ pete, john, mary ];
+
+function sortByAge(arr) {
+    arr.sort((a, b) => a.age - b.age);
+    return arr;
+}
+
+console.log(sortByAge(arr));
+
+// now: [john, mary, pete]
+alert(arr[0].name); // John
+alert(arr[1].name); // Mary
+alert(arr[2].name); // Pete
+
+
+////////////////////////////
+
+//Shuffle an array
+let arr = [1, 2, 3];
+
+function shuffle(arr) {
+    return arr.map([Math.floor(Math.random()*arr.length)]);
+}
+
+//SOLUTION: FISHER-YATES ALGORITHM: walks array in reverse order and swaps each element with a random one before it
+function shuffle(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+      let j = Math.floor(Math.random() * (i + 1)); // random index from 0 to i
+  
+      // swap elements array[i] and array[j]
+      // we use "destructuring assignment" syntax to achieve that
+      // you'll find more details about that syntax in later chapters
+      // same can be written as:
+      // let t = array[i]; array[i] = array[j]; array[j] = t
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+  }
+
+
+////////////////////////////
+  
+//Get average age
+function getAverageAge(arr) {
+   let avgAge = arr.reduce((avg, current) => (avg + current.age) / 2);
+   return avgAge;
+}
+
+let john = { name: "John", age: 25 };
+let pete = { name: "Pete", age: 30 };
+let mary = { name: "Mary", age: 29 };
+
+let arr = [ john, pete, mary ];
+
+alert( getAverageAge(arr) ); // (25 + 30 + 29) / 3 = 28
+
+//SOLUTION
+function getAverageAge(users) {
+    return users.reduce((prev, user) => prev + user.age, 0) / users.length;
+  }
+  
+  let john = { name: "John", age: 25 };
+  let pete = { name: "Pete", age: 30 };
+  let mary = { name: "Mary", age: 29 };
+  
+  let arr = [ john, pete, mary ];
+  
+  alert( getAverageAge(arr) ); // 28
+
+
+////////////////////////////
+
+//Filter unique array members
+function unique(arr) {
+    arr.forEach((string) =>
+        let dupe = arr.includes(string, arr.[string] + 1);
+        let newArr = [];
+        if (dupe === false) {
+            newArr.push(string);
         }
-    }
     )
-    return max
-}
+    return newArr
+  }
+  
+  let strings = ["Hare", "Krishna", "Hare", "Krishna",
+    "Krishna", "Krishna", "Hare", "Hare", ":-O"
+  ];
 
-function maxValueWithForOf() {
-    const values2 = [3, 11, 7, 2, 9, 10];
-    for (const value of values2) {
-        if (value >= max) {
-            max = value
-        } else {
-            max = max
-        }
-    }
-    return max
-}
+//SOLUTION (only good for small arrays)
+function unique(arr) {
+let result = [];
 
-//4 List of words: Write a program that asks the user for a word until the user types "stop". The program then shows each of these words, except "stop".
-let userEntry = ''
-
-function guessStop(userEntry) {
-    userEntry = prompt('Enter a word.')
-    let words = []
-    
-    while (userEntry !== 'stop') {
-        words.push(userEntry);
-        userEntry = prompt('Enter a different word.');
-    }
-
-    if (userEntry === 'stop') {
-        return words
+for (let str of arr) {
+    if (!result.includes(str)) {
+    result.push(str);
     }
 }
 
-//idk how to do this with for each loops
-function guessStopWithForEach(userEntry) {
-    userEntry = prompt('Enter a word.')
-    let words = []
-
-    while (userEntry !== 'stop') {
-        words.push(userEntry);
-        userEntry = prompt('Enter a different word.');
-    }
-
-    if (userEntry === 'stop') {
-        words.push(userEntry);
-    }
-
+return result;
 }
 
-//idk how to do this with for of loops either
-function guessStopWithForOf(userEntry) {
-    userEntry = prompt('Enter a word.')
-    let words = []
+let strings = ["Hare", "Krishna", "Hare", "Krishna",
+"Krishna", "Krishna", "Hare", "Hare", ":-O"
+];
 
-}
+alert( unique(strings) ); // Hare, Krishna, :-O
+
+
+////////////////////////////
+
+//Create keyed object from array
+let users = [
+    {id: 'john', name: "John Smith", age: 20},
+    {id: 'ann', name: "Ann Smith", age: 24},
+    {id: 'pete', name: "Pete Peterson", age: 31},
+  ];
+  
+  let usersById = groupById(users);
+
+  function groupById(users) {
+      users.reduce(newObject, user => `${user.id}: ${user}`, 0)
+      return newObject
+  }
+  
+  /*
+  // after the call we should have:
+  
+  usersById = {
+    john: {id: 'john', name: "John Smith", age: 20},
+    ann: {id: 'ann', name: "Ann Smith", age: 24},
+    pete: {id: 'pete', name: "Pete Peterson", age: 31},
+  }
+  */
+
+  //SOLUTION
+  function groupById(array) {
+    return array.reduce((obj, value) => {
+      obj[value.id] = value;
+      return obj;
+    }, {})
+  }
