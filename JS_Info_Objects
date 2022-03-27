@@ -1,0 +1,66 @@
+//Hello, object
+/*
+Create an empty object user.
+Add the property name with the value John.
+Add the property surname with the value Smith.
+Change the value of the name to Pete.
+Remove the property name from the object.
+*/
+
+let User = {};
+User.name = 'John';
+User.surname = 'Smith';
+User.name = 'Pete';
+delete User.name;
+
+
+//Check for Emptiness
+function isEmpty(obj) {
+    if (obj === {}) { // couldn't get this to work
+        return true;
+    } else {
+        return false;
+    }
+};
+
+//solution
+function isEmpty2(obj) {
+    for (let key in obj) {
+        return false;
+    }
+    return true;
+};
+
+function isEmpty3(obj) {
+    for (let key in obj) {
+        return false;
+    }
+    return true;
+};
+
+
+//Sum object properties
+let salaries = {
+    John: 100,
+    Ann: 160,
+    Pete: 130
+}
+
+let sum = 0
+
+function sumSalaries(salaries) {
+    for (let key in salaries) {
+        sum += salaries[key];
+    };
+    return sum;
+}
+
+
+//Multiply nuymeric property values by 2
+function multiplyNumeric(obj) {
+    for (let key in obj) {
+        if (typeof obj[key] === 'number') { //use == here instead of ===
+            obj[key] *= 2
+        }
+    }
+}
