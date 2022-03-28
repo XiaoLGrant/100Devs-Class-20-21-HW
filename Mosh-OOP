@@ -1,0 +1,118 @@
+const circle1 = {
+    radius: 1,
+    location: {
+        x: 1,
+        y: 1
+    },
+    draw: function() {
+        console.log('draw')
+    }
+};
+
+circle1.draw();
+
+//factory function
+function  createCircle(radius) {
+    return {
+        radius,
+        draw: function() {
+            console.log('draw');
+        }
+    };
+}
+
+const circle2 = createCircle(1);
+
+//constructor function
+function Circle(radius) {
+    this.radius = radius;
+    this.draw = function() {
+        console.log('draw');
+    }
+}
+
+const another = new Circle(1);
+
+//Exercise: design stopwatch object
+// const sw = new Stopwatch();
+// sw.duration
+// sw.start()
+// sw.stop()
+// sw.reset()
+//cannot call start/stop more than once in a row
+
+function Stopwatch(counter) {
+    let startTime; // must define end time
+    let timeDiffSecs;
+    let running = false;
+
+    this.start = function() {
+        if (running === false) {
+            startTime = performance.now();
+            running = true;
+        } else {
+            throw new Error('The stopwatch is already running.')
+        }
+            
+    };
+    this.stop = function() {
+        if (running === true) {
+            const endTime = performance.now();
+            const timeDiff = (endTime - startTime)/1000;
+            timeDiffSecs = timeDiff.toFixed(2);
+            running = false;
+        } else {
+            throw new Error('The stopwatch has already been stopped.')
+        }
+
+    };
+    Object.defineProperty(this, 'duration', {
+        get: function() {
+            return timeDiffSecs;
+        }
+    })
+    // this.duration = timeDiffSecs;
+    // this.duration = function () {
+    //     console.log(`${timeDiffSecs} seconds`);
+    // };
+    this.reset = function() {
+        running = false;
+    }
+}
+
+//SOLUTION
+function Stopwatch2() {
+    let startTime, endTime, running, duration = 0;
+
+    this.start = function() {
+        if (running)
+            throw new Error('Stopwatch has already started.');
+
+        running = true;
+        
+        startTime = new Date();
+    };
+    
+    this.stop = function() {
+        if (!running)
+            throw new Error('Stopwatch is not started.');
+        
+        running = false;
+
+        endTime = new Date();
+
+        const seconds = (endTime.getTime() - startTime.getTime()) / 1000;
+        duration += seconds;
+    };
+
+    this.reset = function() {
+        startTime = null;
+        endTime = null;
+        running = false;
+        duration = 0;
+    };
+    
+    Object.defineProperty(this, 'duration', {
+        get: function() {return duration;}
+    });
+}
